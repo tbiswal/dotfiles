@@ -1,4 +1,4 @@
-# neovim setup for web development#
+# Neovim setup for web development#
 **Neovim Official doc:** https://neovim.io/
 
 **Install plugins to customize:**
@@ -23,4 +23,6 @@ Plug 'ryanoasis/vim-devicons' and if you find an issue please choose the correct
 
 If you want good color scheme for your Mac default terminal: https://medium.com/@sathishvj/getting-fancy-color-schemes-on-a-mac-osx-terminal-64111d4fc63b
 
-For configuration please follow my init.vim file and add to your init.vim. The path of init.vim in my case, resides in ~/.config/nvim/
+### My Configuration For Neovim ###
+
+For web development, you can follow my configuration added to init.vim file. The path of init.vim in my case is ~/.config/nvim/
