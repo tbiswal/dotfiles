@@ -1,5 +1,4 @@
 call plug#begin('~/.config/nvim/plugged')
-
   Plug 'sainnhe/sonokai'
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
@@ -26,6 +25,7 @@ call plug#begin('~/.config/nvim/plugged')
   " JSON front matter highlight plugin
   Plug 'elzr/vim-json'
   Plug 'plasticboy/vim-markdown'
+  Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 
   "PHP Syntax Hoghlight
   Plug 'StanAngeloff/php.vim', {'for': 'php'}
@@ -251,5 +251,10 @@ let g:vim_markdown_math = 1
 let g:vim_markdown_frontmatter = 1  " for YAML format
 let g:vim_markdown_toml_frontmatter = 1  " for TOML format
 let g:vim_markdown_json_frontmatter = 1  " for JSON format
+
+" do not close the preview tab when switching to other buffers
+let g:mkdp_auto_close = 0
+let g:mkdp_auto_start = 0
+
 
 "MD-------------------------------"
