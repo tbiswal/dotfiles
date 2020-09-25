@@ -224,7 +224,7 @@ nnoremap <leader>q @q
 nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 
 " bind \ (backward slash) to grep shortcut
-command! -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
+"command! -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
 nnoremap \ :Ag<SPACE>
 " Ag will search from project root
 let g:ag_working_path_mode="r"
@@ -323,10 +323,18 @@ if &term == "screen"
   set t_Co=256
 endif
 
-colorscheme sonokai
+"colorscheme sonokai
+let g:gruvbox_contrast_dark = "medium"
+colorscheme gruvbox
+"colorscheme molokai
+"let g:molokai_original = 1
+"let g:rehash256 = 1
+
 "let g:airline_theme='one'
 "let g:one_allow_italics = 1
 "colorscheme one
+"set background=dark
+"call one#highlight('vimLineComment', 'cccccc', '', 'none')
 
 "buffer
 let g:airline#extensions#tabline#enabled = 1
