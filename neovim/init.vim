@@ -324,7 +324,7 @@ if &term == "screen"
 endif
 
 "colorscheme sonokai
-let g:gruvbox_contrast_dark = "medium"
+let g:gruvbox_contrast_dark = "soft"
 colorscheme gruvbox
 "colorscheme molokai
 "let g:molokai_original = 1
@@ -690,7 +690,7 @@ let NERDTreeIgnore = ['\.pyc$', '^__pycache__$']
 
 " Toggle
 nnoremap <silent> <C-b> :NERDTreeToggle<CR>
-nmap <leader>nf :NERDTreeFind<CR>
+nmap <leader>r :NERDTreeFind<CR>
 
 "show current root as relative path from $HOME in status bar
 let NERDTreeStatusline="%{exists('b:NERDTree')?fnamemodify(b:NERDTree.root.path.str(), ':~'):''}"
