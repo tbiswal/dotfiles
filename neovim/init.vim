@@ -339,6 +339,7 @@ colorscheme gruvbox
 "buffer
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
+let g:airline_powerline_fonts = 1
 
 "gitgutter
 nmap ]h <Plug>(GitGutterNextHunk)
@@ -680,6 +681,7 @@ nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 "Explorer
 let g:NERDTreeShowHidden = 1
 let g:NERDTreeMinimalUI = 1
+let g:NERDTreeDirArrows = 1
 let g:NERDTreeIgnore = []
 let g:NERDTreeStatusline = ''
 " Automaticaly close nvim if NERDTree is only thing left open
