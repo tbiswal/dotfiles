@@ -335,6 +335,12 @@ if &term == "screen"
   set t_Co=256
 endif
 
+"let g:airline_theme='sonokai'
+  syntax on
+"  let g:oceanic_next_terminal_bold = 1
+"  let g:oceanic_next_terminal_italic = 1
+  "colorscheme OceanicNext
+
 "colorscheme sonokai
 let g:gruvbox_contrast_dark = "soft"
 colorscheme gruvbox
