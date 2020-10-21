@@ -60,6 +60,7 @@ call plug#begin('~/.config/nvim/plugged')
 
   " Comment
   Plug 'preservim/nerdcommenter'
+
 call plug#end()
 
 "VIm Settings---------------
@@ -84,6 +85,8 @@ set autowrite     " Automatically :write before running commands
 set autoread      " Reload files changed outside vim
 " Trigger autoread when changing buffers or coming back to vim in terminal.
 au FocusGained,BufEnter * :silent! !
+nnoremap <F2> :mksession! ~/vim_session <cr> " Quick write session with F2
+nnoremap <F3> :source ~/vim_session <cr>     " And load session with F3
 
 "Set default font in mac vim and gvim
 set guifont=Inconsolata\ for\ Powerline:h24
@@ -94,7 +97,7 @@ set wildmode=list:longest,full
 
 "Allow usage of mouse in iTerm
 set ttyfast
-set mouse=a
+"set mouse=a
 " set ttymouse=xterm2
 
 " Make searching better
@@ -103,6 +106,7 @@ set ignorecase    " case insensitive searching (unless specified)
 set smartcase
 set hlsearch
 nnoremap <silent> <leader>, :noh<cr> " Stop highlight after searching
+
 set incsearch
 set showmatch
 
@@ -239,7 +243,24 @@ nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 "command! -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
 nnoremap \ :Ag<SPACE>
 " Ag will search from project root
-let g:ag_working_path_mode="r"
+"let g:ag_working_path_mode="r"
+nmap <Leader>b :Buffers<CR>
+nmap <Leader>h :History<CR>
+nmap <Leader>g :GFiles<CR>
+nmap <Leader>F :Files<CR>
+nmap <Leader>t :BTags<CR>
+nmap <Leader>T :Tags<CR>
+nmap <Leader>l :BLines<CR>
+nmap <Leader>L :Lines<CR>
+nmap <Leader>' :Marks<CR>
+nmap <Leader>/ :Rg<Space>
+nmap <Leader>C :Commands<CR>
+nmap <Leader>: :History:<CR>
+nmap <Leader>M :Maps<CR>
+nmap <Leader>s :Filetypes<CR>
+nmap gn :bn<CR>
+nmap gp :bp<CR>
+nmap gd :bd<CR> 
 
 "Map Ctrl + S to save in any mode
 noremap <silent> <C-S>          :update<CR>
@@ -352,7 +373,6 @@ colorscheme gruvbox
 "let g:one_allow_italics = 1
 "colorscheme one
 "set background=dark
-"call one#highlight('vimLineComment', 'cccccc', '', 'none')
 
 "buffer
 let g:airline#extensions#tabline#enabled = 1
@@ -416,6 +436,7 @@ nmap <leader>fx <Plug>(ale_fix)
 
 command! -nargs=1 Silent execute ':silent !'.<q-args> | execute ':redraw!'
 imap <c-s> <esc>:w<cr>:Silent php-cs-fixer fix %:p --level=symfony<cr>
+set redrawtime=10000
 
 " refactoring toolbox
 let g:vim_php_refactoring_default_property_visibility = 'private'
