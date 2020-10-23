@@ -6,7 +6,7 @@ call plug#begin('~/.config/nvim/plugged')
 
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-  "PHP Autocompletion
+  "PHP AutoCompletion
   Plug 'ncm2/ncm2'
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
@@ -72,7 +72,6 @@ set nocompatible
 
 " Leader - ( Spacebar )
 let mapleader = " "
-
 set backspace=2   " Backspace deletes like most programs in insert mode
 set nobackup
 set nowritebackup
@@ -88,7 +87,7 @@ au FocusGained,BufEnter * :silent! !
 nnoremap <F2> :mksession! ~/vim_session <cr> " Quick write session with F2
 nnoremap <F3> :source ~/vim_session <cr>     " And load session with F3
 
-"Set default font in mac vim and gvim
+"Set  font in mac vim and gvim
 set guifont=Inconsolata\ for\ Powerline:h24
 set cursorline    " highlight the current line
 set visualbell    " stop that ANNOYING beeping
@@ -120,7 +119,7 @@ set expandtab
 set list listchars=tab:»·,trail:·,nbsp:·
 
 " Make it obvious where 100 characters is
-set textwidth=100
+set textwidth=80
 " set formatoptions=cq
 set formatoptions=qrn1
 set wrapmargin=0
@@ -283,8 +282,8 @@ nnoremap <silent> <Left> :vertical resize -5<cr>
 nnoremap <silent> <Up> :resize +5<cr>
 nnoremap <silent> <Down> :resize -5<cr>
 
-inoremap <Tab> <c-r>=InsertTabWrapper()<cr>
-inoremap <S-Tab> <c-n>
+"inoremap <Tab> <c-r>=InsertTabWrapper()<cr>
+"inoremap <S-Tab> <c-n>
 
 " Switch between the last two files
 nnoremap <leader><leader> <c-^>
@@ -333,18 +332,6 @@ augroup vimrcEx
 augroup END
 
 
-" TODO: Don't think I need this anymore? Pretty sure supertab handles it
-" Tab completion
-" will insert tab at beginning of line,
-" will use completion if not at beginning
-" function! InsertTabWrapper()
-"     let col = col('.') - 1
-"     if !col || getline('.')[col - 1] !~ '\k'
-"         return "\<tab>"
-"     else
-"         return "\<c-p>"
-"     endif
-" endfunction
 " Vim Config---------------------------------------------
 
 
@@ -439,12 +426,12 @@ imap <c-s> <esc>:w<cr>:Silent php-cs-fixer fix %:p --level=symfony<cr>
 set redrawtime=10000
 
 " refactoring toolbox
-let g:vim_php_refactoring_default_property_visibility = 'private'
-let g:vim_php_refactoring_default_method_visibility = 'private'
+let g:vim_php_refactoring__property_visibility = 'private'
+let g:vim_php_refactoring__method_visibility = 'private'
 let g:vim_php_refactoring_auto_validate_visibility = 1
 let g:vim_php_refactoring_phpdoc = "pdv#DocumentCurrentLine"
 
-let g:vim_php_refactoring_use_default_mapping = 0
+let g:vim_php_refactoring_use__mapping = 0
 nnoremap <leader>rlv :call PhpRenameLocalVariable()<CR>
 nnoremap <leader>rcv :call PhpRenameClassVariable()<CR>
 nnoremap <leader>rrm :call PhpRenameMethod()<CR>
@@ -572,7 +559,7 @@ set nowritebackup
 " Give more space for displaying messages.
 set cmdheight=2
 
-" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" Having longer updatetime ( is 4000 ms = 4 s) leads to noticeable
 " delays and poor user experience.
 set updatetime=300
 
@@ -709,9 +696,9 @@ nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
 nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
 " Search workspace symbols.
 nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
-" Do default action for next item.
+" Do  action for next item.
 nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
-" Do default action for previous item.
+" Do  action for previous item.
 nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
