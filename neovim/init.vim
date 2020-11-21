@@ -61,6 +61,8 @@ call plug#begin('~/.config/nvim/plugged')
   " Comment
   Plug 'preservim/nerdcommenter'
 
+  " Color
+  Plug 'mhartington/oceanic-next'
 call plug#end()
 
 "VIm Settings---------------
@@ -259,7 +261,6 @@ nmap <Leader>M :Maps<CR>
 nmap <Leader>s :Filetypes<CR>
 nmap gn :bn<CR>
 nmap gp :bp<CR>
-nmap gd :bd<CR> 
 
 "Map Ctrl + S to save in any mode
 noremap <silent> <C-S>          :update<CR>
@@ -343,23 +344,10 @@ if &term == "screen"
   set t_Co=256
 endif
 
-"let g:airline_theme='sonokai'
-  syntax on
-"  let g:oceanic_next_terminal_bold = 1
-"  let g:oceanic_next_terminal_italic = 1
-  "colorscheme OceanicNext
-
-"colorscheme sonokai
-let g:gruvbox_contrast_dark = "soft"
-colorscheme gruvbox
-"colorscheme molokai
-"let g:molokai_original = 1
-"let g:rehash256 = 1
-
-"let g:airline_theme='one'
-"let g:one_allow_italics = 1
-"colorscheme one
-"set background=dark
+let g:airline_theme='oceanicnext'
+syntax on
+let g:oceanic_next_terminal_bold = 1
+colorscheme OceanicNext
 
 "buffer
 let g:airline#extensions#tabline#enabled = 1
@@ -722,4 +710,3 @@ nmap <leader>r :NERDTreeFind<CR>
 
 "show current root as relative path from $HOME in status bar
 let NERDTreeStatusline="%{exists('b:NERDTree')?fnamemodify(b:NERDTree.root.path.str(), ':~'):''}"
-
