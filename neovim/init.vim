@@ -11,7 +11,6 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
   Plug 'phpactor/phpactor', { 'do': ':call phpactor#Update()', 'for': 'php'}
-  Plug 'phpactor/ncm2-phpactor', {'for': 'php'}
   Plug 'ncm2/ncm2-ultisnips'
 
   "Php Custom snippets Ex: fore means foreach
@@ -433,8 +432,8 @@ nnoremap <leader>rsg :call PhpCreateSettersAndGetters()<CR>
 " context-aware menu with all functions (ALT-m)
 nnoremap <m-m> :call phpactor#ContextMenu()<cr>
 
-nnoremap gd :call phpactor#GotoDefinition()<CR>
-nnoremap gr :call phpactor#FindReferences()<CR>
+nnoremap GD :call phpactor#GotoDefinition()<CR>
+nnoremap GR :call phpactor#FindReferences()<CR>
 
 " Extract method from selection
 vmap <silent><Leader>em :<C-U>call phpactor#ExtractMethod()<CR>
@@ -537,6 +536,11 @@ let g:mkdp_auto_start = 0
 "MD-------------------------------"
 
 "COC-----------------------------
+
+let g:coc_global_extensions = [
+  \ 'coc-tsserver',
+  \ 'coc-eslint',
+  \]
 " TextEdit might fail if hidden is not set.
 set hidden
 
