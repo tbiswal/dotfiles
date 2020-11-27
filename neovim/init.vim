@@ -12,6 +12,9 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'roxma/vim-hug-neovim-rpc'
   Plug 'phpactor/phpactor', { 'do': ':call phpactor#Update()', 'for': 'php'}
   Plug 'ncm2/ncm2-ultisnips'
+  Plug 'ncm2/ncm2-bufword'
+  Plug 'ncm2/ncm2-path'
+  Plug 'phpactor/ncm2-phpactor'
 
   "Php Custom snippets Ex: fore means foreach
   Plug 'SirVer/ultisnips'
@@ -187,10 +190,6 @@ nnoremap <silent> <bs> :TmuxNavigateLeft<cr>
 nnoremap j gj
 nnoremap k gk
 
-" Use tab to jump between blocks, because it's easier
-nnoremap <tab> %
-vnoremap <tab> %
-
 " Set spellfile to location that is guaranteed to exist, can be symlinked to
 " Dropbox or kept in Git and managed outside of thoughtbot/dotfiles using rcm.
 set spellfile=$HOME/.vim-spell-en.utf-8.add
@@ -282,8 +281,6 @@ nnoremap <silent> <Left> :vertical resize -5<cr>
 nnoremap <silent> <Up> :resize +5<cr>
 nnoremap <silent> <Down> :resize -5<cr>
 
-"inoremap <Tab> <c-r>=InsertTabWrapper()<cr>
-"inoremap <S-Tab> <c-n>
 
 " Switch between the last two files
 nnoremap <leader><leader> <c-^>
@@ -367,18 +364,9 @@ augroup ncm2
   au User Ncm2PopupClose set completeopt=menuone
 augroup END
 
-" parameter expansion for selected entry via Enter
-inoremap <silent> <expr> <CR> (pumvisible() ? ncm2_ultisnips#expand_or("\<CR>", 'n') : "\<CR>")
-
-" cycle through completion entries with tab/shift+tab
-"inoremap <expr> <TAB> pumvisible() ? "\<c-n>" : "\<TAB>"
-"inoremap <expr> <s-tab> pumvisible() ? "\<c-p>" : "\<TAB>"
-
-" use 4 spaces instead of tab (to replace existing tab use :retab)
-" copy indent from current line when starting a new line
-"
 set autoindent
 set expandtab
+
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
@@ -509,7 +497,6 @@ let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 
 "MD-------------------------------"
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger="<tab>"  " use <Tab> to trigger autocompletion
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 
@@ -588,14 +575,10 @@ else
   inoremap <silent><expr> <c-@> coc#refresh()
 endif
 
-" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
-" position. Coc only does snippet and additional edit on confirm.
-" <cr> could be remapped by other vim plugin, try `:verbose imap <CR>`.
-if exists('*complete_info')
-  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
-else
-  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-endif
+" Make <CR> auto-select the first completion item and notify coc.nvim to
+" format on enter, <cr> could be remapped by other vim plugin
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 " Use `[g` and `]g` to navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
