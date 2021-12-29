@@ -400,6 +400,7 @@ let g:ale_fixers = {
   \ '*': ['remove_trailing_lines', 'trim_whitespace'],
   \ 'php': ['phpcbf', 'php_cs_fixer', 'remove_trailing_lines', 'trim_whitespace'],
   \}
+let g:ale_linters = { 'php': ['php', 'psalm'] }
 
 augroup ncm2
   au!
@@ -421,7 +422,7 @@ nmap <leader>fx <Plug>(ale_fix)
 
 command! -nargs=1 Silent execute ':silent !'.<q-args> | execute ':redraw!'
 imap <c-s> <esc>:w<cr>:Silent php-cs-fixer fix %:p --level=symfony<cr>
-set redrawtime=1000
+set redrawtime=10000
 
 " refactoring toolbox
 let g:vim_php_refactoring__property_visibility = 'private'
