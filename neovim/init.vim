@@ -14,19 +14,15 @@ call plug#begin('~/.config/nvim/plugged')
   "popup window
   Plug 'voldikss/vim-floaterm'
 
-  "PHP AutoCompletion
+  "AutoCompletion
   Plug 'ncm2/ncm2'
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
   Plug 'SirVer/ultisnips' | Plug 'phux/vim-snippets'
-  Plug 'phpactor/ncm2-phpactor', {'for': 'php'}
   Plug 'ncm2/ncm2-ultisnips'
   Plug 'ncm2/ncm2-bufword'
   Plug 'ncm2/ncm2-path'
-  Plug 'phpactor/ncm2-phpactor'
 
-  "Php Custom snippets Ex: fore means foreach
-  Plug 'phpactor/phpactor', { 'do': ':call phpactor#Update()', 'for': 'php'}
   Plug 'honza/vim-snippets'
   Plug 'phux/vim-snippets'
 
@@ -42,20 +38,8 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'plasticboy/vim-markdown'
   Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 
-  "PHP Syntax Hoghlight
-  Plug 'StanAngeloff/php.vim', {'for': 'php'}
-
   "Less messy code with ale
   Plug 'w0rp/ale'
-
-  "PHP refactoring toolbox
-  Plug 'adoy/vim-php-refactoring-toolbox', {'for': 'php'}
-
-  " PHP Namespace Handling
-  Plug 'arnaud-lb/vim-php-namespace', {'for': 'php'}
-
-  " Open Php manual
-  Plug 'alvan/vim-php-manual', {'for': 'php'}
 
   " fuzy searching
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -73,7 +57,18 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'preservim/nerdcommenter'
 
   " Color
-  Plug 'mhartington/oceanic-next'
+  "Plug 'mhartington/oceanic-next'
+  Plug 'morhetz/gruvbox'
+  Plug 'github/copilot.vim'
+  Plug 'neovim/nvim-lspconfig'
+  Plug 'hrsh7th/nvim-cmp'
+  Plug 'hrsh7th/cmp-nvim-lsp'
+  Plug 'hrsh7th/cmp-buffer'
+  Plug 'hrsh7th/cmp-path'
+  Plug 'hrsh7th/cmp-cmdline'
+  Plug 'hrsh7th/cmp-vsnip'  " For snippet support
+  Plug 'hrsh7th/vim-vsnip'  " For snippet support
+
 call plug#end()
 
 "VIm Settings---------------
@@ -84,6 +79,10 @@ call plug#end()
 set nocompatible
 
 " Leader - ( Spacebar )
+let g:webdevicons_enable = 1
+let g:webdevicons_enable_nerdtree = 1
+" Enable Copilot by default
+let g:copilot_enabled = 1
 let mapleader = " "
 set backspace=2   " Backspace deletes like most programs in insert mode
 set nobackup
@@ -249,7 +248,7 @@ nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 
 " bind \ (backward slash) to grep shortcut
 "command! -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
-nnoremap \ :Ag<SPACE>
+nnoremap \ :Rg<SPACE>
 " Ag will search from project root
 "let g:ag_working_path_mode="r"
 nmap <Leader>b :Buffers<CR>
@@ -349,10 +348,25 @@ if &term == "screen"
   set t_Co=256
 endif
 
-let g:airline_theme='oceanicnext'
-syntax on
-let g:oceanic_next_terminal_bold = 1
-colorscheme OceanicNext
+"let g:airline_theme='oceanicnext'
+"syntax on
+"let g:oceanic_next_terminal_bold = 1
+"colorscheme OceanicNext
+
+" Set Gruvbox theme
+syntax enable
+set background=dark
+colorscheme gruvbox
+
+" Optional: Enable true color support (if your terminal supports it)
+if has('termguicolors')
+    set termguicolors
+endif
+
+" Optional: Customize Gruvbox settings
+let g:gruvbox_contrast_dark = 'medium'  " Options: 'soft', 'medium', 'hard'
+let g:gruvbox_italic = 1                " Enable italics
+
 
 "buffer
 let g:airline#extensions#tabline#enabled = 1
@@ -362,9 +376,6 @@ let g:airline_powerline_fonts = 1
 "gitgutter
 nmap ]h <Plug>(GitGutterNextHunk)
 nmap [h <Plug>(GitGutterPrevHunk)
-
-" PHP7
-let g:ultisniips_php_scalar_typesi = 1
 
 augroup ncm2
   au!
@@ -376,14 +387,8 @@ augroup END
 set autoindent
 set expandtab
 
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
-
 " highlight the line which is longer than the defined margin (80 character)
 highlight MaxLineChar ctermbg=red
-autocmd FileType php,js,vue,go call matchadd('MaxLineChar', '\%80v', 75)
-
 
 " disable linting while typing
 let g:ale_lint_on_text_changed = 'never'
@@ -393,14 +398,6 @@ let g:ale_open_list = 1
 let g:ale_keep_list_window_open=0
 let g:ale_set_quickfix=0
 let g:ale_list_window_size = 5
-let g:ale_php_phpcbf_standard='PSR2'
-let g:ale_php_phpcs_standard='phpcs.xml.dist'
-let g:ale_php_phpmd_ruleset='phpmd.xml'
-let g:ale_fixers = {
-  \ '*': ['remove_trailing_lines', 'trim_whitespace'],
-  \ 'php': ['phpcbf', 'php_cs_fixer', 'remove_trailing_lines', 'trim_whitespace'],
-  \}
-let g:ale_linters = { 'php': ['php', 'psalm'] }
 
 augroup ncm2
   au!
@@ -421,91 +418,7 @@ nmap <leader>fx <Plug>(ale_fix)
 "let g:ale_fix_on_save = 1
 
 command! -nargs=1 Silent execute ':silent !'.<q-args> | execute ':redraw!'
-imap <c-s> <esc>:w<cr>:Silent php-cs-fixer fix %:p --level=symfony<cr>
 set redrawtime=10000
-
-" refactoring toolbox
-let g:vim_php_refactoring__property_visibility = 'private'
-let g:vim_php_refactoring__method_visibility = 'private'
-let g:vim_php_refactoring_auto_validate_visibility = 1
-let g:vim_php_refactoring_phpdoc = "pdv#DocumentCurrentLine"
-
-let g:vim_php_refactoring_use_default_mapping = 0
-nnoremap <leader>rlv :call PhpRenameLocalVariable()<CR>
-nnoremap <leader>rcv :call PhpRenameClassVariable()<CR>
-nnoremap <leader>rrm :call PhpRenameMethod()<CR>
-nnoremap <leader>reu :call PhpExtractUse()<CR>
-vnoremap <leader>rec :call PhpExtractConst()<CR>
-nnoremap <leader>rep :call PhpExtractClassProperty()<CR>
-nnoremap <leader>rnp :call PhpCreateProperty()<CR>
-nnoremap <leader>rdu :call PhpDetectUnusedUseStatements()<CR>
-nnoremap <leader>rsg :call PhpCreateSettersAndGetters()<CR>
-
-" context-aware menu with all functions (ALT-m)
-nnoremap <m-m> :call phpactor#ContextMenu()<cr>
-
-nnoremap gd :call phpactor#GotoDefinition()<CR>
-nnoremap gr :call phpactor#FindReferences()<CR>
-
-" Extract method from selection
-vmap <silent><Leader>em :<C-U>call phpactor#ExtractMethod()<CR>
-" extract variable
-vnoremap <silent><Leader>ee :<C-U>call phpactor#ExtractExpression(v:true)<CR>
-nnoremap <silent><Leader>ee :call phpactor#ExtractExpression(v:false)<CR>
-" extract interface
-nnoremap <silent><Leader>rei :call phpactor#ClassInflect()<CR>
-
-let g:phpactor_executable = '~/.config/nvim/plugged/phpactor/bin/phpactor'
-
-function! PHPModify(transformer)
-    :update
-    let l:cmd = "silent !".g:phpactor_executable." class:transform ".expand('%').' --transform='.a:transformer
-    execute l:cmd
-endfunction
-
-nnoremap <leader>rcc :call PhpConstructorArgumentMagic()<cr>
-function! PhpConstructorArgumentMagic()
-    " update phpdoc
-    if exists("*UpdatePhpDocIfExists")
-        normal! gg
-        /__construct
-        normal! n
-        :call UpdatePhpDocIfExists()
-        :w
-    endif
-    :call PHPModify("complete_constructor")
-endfunction
-
-
-nnoremap <leader>ric :call PHPModify("implement_contracts")<cr>
-
-nnoremap <leader>raa :call PHPModify("add_missing_properties")<cr>
-
-nnoremap <leader>rmc :call PHPMoveClass()<cr>
-function! PHPMoveClass()
-    :w
-    let l:oldPath = expand('%')
-    let l:newPath = input("New path: ", l:oldPath)
-    execute "!".g:phpactor_executable." class:move ".l:oldPath.' '.l:newPath
-    execute "bd ".l:oldPath
-    execute "e ". l:newPath
-endfunction
-
-nnoremap <leader>rmd :call PHPMoveDir()<cr>
-function! PHPMoveDir()
-    :w
-    let l:oldPath = input("old path: ", expand('%:p:h'))
-    let l:newPath = input("New path: ", l:oldPath)
-    execute "!".g:phpactor_executable." class:move ".l:oldPath.' '.l:newPath
-endfunction
-
-" Namespace Handling
-nnoremap <Leader>u :PHPImportClass<cr>
-nnoremap <Leader>e :PHPExpandFQCNAbsolute<cr>
-nnoremap <Leader>E :PHPExpandFQCN<cr>
-
-" Php Manual
-let g:php_manual_online_search_shortcut = '<leader>k'
 
 " Fuzzy
 nnoremap <C-p> :FZF<CR>
@@ -517,7 +430,8 @@ let g:fzf_action = {
 " requires silversearcher-ag
 
 " used to ignore gitignore files
-let $FZF_DEFAULT_COMMAND = 'ag -g ""'
+"let $FZF_DEFAULT_COMMAND = 'rg -g ""'
+let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --glob "!{.git,node_modules,.cache}/*"'
 
 "MD-------------------------------"
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
@@ -564,3 +478,19 @@ nmap <leader>r :NERDTreeFind<CR>
 
 "show current root as relative path from $HOME in status bar
 let NERDTreeStatusline="%{exists('b:NERDTree')?fnamemodify(b:NERDTree.root.path.str(), ':~'):''}"
+
+lua << EOF
+-- Setup tsserver (TypeScript language server)
+require'lspconfig'.tsserver.setup{
+  on_attach = function(_, bufnr)
+    local opts = { noremap=true, silent=true }
+
+    -- Keybindings for LSP functions
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  end
+}
+EOF
